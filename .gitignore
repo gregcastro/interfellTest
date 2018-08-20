@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IntelliJ IDEA
+*.iml
+.idea/
+
+# virtualenv
+env/
+
+# Django stuff:
+*.log
+local_settings.py
+
+# Visual Studio Code
+*.vscode
+
+# migrations
+*migrations/
+
