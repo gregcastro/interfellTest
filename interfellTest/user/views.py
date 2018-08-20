@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
-from serializers import UserListSerializer, UserDetailSerializer
+from .models import User
 from .permissions import UserAllowOnlyCreate, UserisOwnerOrAdmin
+from .serializers import UserListSerializer, UserDetailSerializer
 
 
 class UserListCreateAPIView(ListCreateAPIView):

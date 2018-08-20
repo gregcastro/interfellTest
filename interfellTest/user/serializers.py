@@ -8,7 +8,6 @@ class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'first_name', 'last_name', 'username', 'email', 'password', 'city', 'academic_degree', 'address')
-        depth = 1
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
@@ -23,4 +22,3 @@ class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'city', 'password', 'academic_degree', 'address')
-        depth = 1
