@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import { login } from '../actions/login';
 import Button from '../components/button';
 import InputField from '../components/inputField';
 
@@ -10,11 +13,11 @@ class Login extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.validate = this.validate.bind(this);
+		this.login = this.login.bind(this);
 	}
 
-	validate() {
-		alert('hola');
+	login() {
+		this.props.login(this.props.user, () => (alert('Bienvenido')));
 	}
 
 	render() {
@@ -42,10 +45,28 @@ class Login extends React.Component {
 					required
 				/>
 
-				<Button title='Iniciar Sesión' width={110} height={30} fontSize={15} callToAction={this.validate} />
+				<Button title='Iniciar Sesión' width={110} height={30} fontSize={15} callToAction={this.login} />
 			</div>
 		);
 	}
 }
 
-export default Login;
+Login.defaultProps = {
+	login: null,
+	error: {},
+	user: {},
+};
+Login.propTypes = {
+	login: PropTypes.func,
+	error: PropTypes.object,
+	user: PropTypes.object,
+};
+
+const mapStateToProps = state => (
+	{
+		user: state.login.login,
+		error: state.login.error,
+	}
+);
+const mapDispatchToProps = { login };
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

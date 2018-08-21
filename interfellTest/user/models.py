@@ -1,17 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-DEGREES = (
-	('0', 'Básico'),
-	('1', 'Bachiller'),
-	('2', 'Universitario'),
-)
-
 
 class User(AbstractUser):
 	city = models.ForeignKey('City', on_delete=models.CASCADE, null=True)
 	academic_degree = models.ForeignKey('AcademicDegree', on_delete=models.CASCADE, null=True)
-	address = models.TextField()
+	address = models.TextField(blank=True)
 
 	class Meta:
 		db_table = 'user'
@@ -42,10 +36,10 @@ class City(models.Model):
 
 
 class AcademicDegree(models.Model):
-	degree = models.CharField(choices=DEGREES, max_length=1)
+	name = models.CharField(max_length=30)
 
 	class Meta:
 		db_table = 'academic_degree'
 
 	def __str__(self):
-		return self.degree
+		return self.name

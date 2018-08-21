@@ -1,3 +1,5 @@
+import request, { addAuth } from '../utils/network';
+
 import * as TYPE from './Types';
 
 export const login = (user, callback) => (dispatch) => {
@@ -5,9 +7,10 @@ export const login = (user, callback) => (dispatch) => {
         type: TYPE.LOGIN,
     });
     request
-        .post('/auth')
+        .post('/login/')
         .send(user)
         .then((response) => {
+            addAuth(response.body.token);
             callback();
             dispatch({
                 type: TYPE.LOGIN_SUCCESS,
@@ -15,9 +18,15 @@ export const login = (user, callback) => (dispatch) => {
             });
         })
         .catch((err) => {
+            console.log(err);
             dispatch({
                 type: TYPE.LOGIN_FAIL,
                 payload: err.response.body,
             });
         });
+};
+
+export const logout = callback => (dispatch) => {
+    callback();
+    dispatch({ type: TYPE.LOGOUT });
 };

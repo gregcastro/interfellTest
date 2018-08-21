@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 
 import setInputField from '../actions/inputField';
 
-// import '../sass/components/inputField.scss';
 
 class InputField extends React.PureComponent {
   render() {
     return (
-      <div className="input-field-container">
+      <div className="">
             <input
-                onChange={(e) => { this.props.setInputField(e.target.value, this.props.typeReducer); }}
-                value={this.props.value} type={this.props.type}
-                className="input-field"
+                onChange={(e) => {this.props.setInputField(e.target.value, this.props.typeReducer);}}
+                defaultValue={this.props.value}
+                type={this.props.type}
+                className=""
                 placeholder={this.props.placeholder}
                 maxLength={this.props.maxLength}
                 disabled={this.props.disabled}
@@ -24,7 +24,6 @@ class InputField extends React.PureComponent {
   }
 }
 InputField.defaultProps = {
-//   width: 0,
   type: 'text',
   disabled: '',
   maxLength: 64,
@@ -36,7 +35,6 @@ InputField.defaultProps = {
 };
 InputField.propTypes = {
   type: PropTypes.string,
-//   width: PropTypes.number,
   value: PropTypes.string,
   required: PropTypes.bool,
   disabled: PropTypes.string,
