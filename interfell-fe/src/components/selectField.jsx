@@ -8,7 +8,7 @@ class SelectField extends React.PureComponent {
 
     render() {
         let optionValues = null;
-        if (this.props.values.lenght !== 0) {
+        if (this.props.values !== null && this.props.values.lenght !== 0) {
             optionValues = this.props.values.map(item => (
                 <option selected={item.id === this.props.value} key={item.id} value={item.id}>{item.name}</option>
             ));

@@ -8,7 +8,7 @@ import Button from '../components/button';
 import { urlLogin } from '../routes/routes';
 import InputField from '../components/inputField';
 import SelectField from '../components/selectField';
-import { get_countries, get_cities, get_academic_degrees, update_user, get_user } from '../actions/profile';
+import { get_countries, get_cities, get_academic_degrees, update_user, get_user, get_country_by_user } from '../actions/profile';
 
 import {
     SET_ACADEMIC_DEGREE,
@@ -33,11 +33,17 @@ class Profile extends React.Component {
     }
 
     componentWillMount() {
-        this.props.get_countries();
-        this.props.get_cities();
-        this.props.get_academic_degrees();
-        this.props.get_user(this.props.userData.pk);
+        this.props.get_countries(this.props.token);
+        this.props.get_cities(this.props.token, this.props.country);
+        this.props.get_academic_degrees(this.props.token);
+        this.props.get_user(this.props.token, this.props.userData.pk);
+        this.props.get_country_by_user(this.props.token);
 
+    }
+    componentWillReceiveProps(nextProps) {
+        if (this.props.country !== nextProps.country) {
+            this.props.get_cities(this.props.token,nextProps.country);
+        }
     }
 
     redirect(url) {
@@ -50,7 +56,7 @@ class Profile extends React.Component {
     }
 
     updateUser() {
-        this.props.update_user(this.props.user, this.props.userData.pk, () => (alert('Datos actualizados exitosamente')));
+        this.props.update_user(this.props.token, this.props.user, this.props.userData.pk, () => (alert('Datos actualizados exitosamente')));
     }
 
     render() {
@@ -90,11 +96,11 @@ class Profile extends React.Component {
                 />
 
                 Pais
-                <SelectField values={this.props.countries} typeReducer={SET_COUNTRY} />
+                <SelectField values={this.props.countries} typeReducer={SET_COUNTRY} value={this.props.country} />
                 <br />
 
                 Ciudad
-                <SelectField values={this.props.cities} typeReducer={SET_CITY} value={this.props.user.city} />
+                <SelectField values={this.props.cities} typeReducer={SET_CITY} value={this.props.user.city}/>
                 <br />
 
                 Nivel Academico
@@ -120,11 +126,21 @@ Profile.defaultProps = {
     login: null,
     error: {},
     user: {},
+    countries: [],
+    cities: [],
+    academicDegrees: [],
+    token: '',
+    country: -1,
 };
 Profile.propTypes = {
     login: PropTypes.func,
     error: PropTypes.object,
     user: PropTypes.object,
+    countries: PropTypes.array,
+    cities: PropTypes.array,
+    academicDegrees: PropTypes.array,
+    token: PropTypes.string,
+    country: PropTypes.number,
 };
 
 const mapStateToProps = state => (
@@ -135,7 +151,9 @@ const mapStateToProps = state => (
         cities: state.profile.cities,
         academicDegrees: state.profile.academicDegrees,
         userData: state.login.token.user,
+        token: state.login.token.token,
+        country: state.profile.country,
     }
 );
-const mapDispatchToProps = { get_countries, get_cities, get_academic_degrees, update_user, logout, get_user };
+const mapDispatchToProps = { get_countries, get_cities, get_academic_degrees, update_user, logout, get_user, get_country_by_user };
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

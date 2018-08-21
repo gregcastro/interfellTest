@@ -21,3 +21,5 @@ export const UPDATE_USER_SUCCESS = 'update_user_success';
 export const UPDATE_USER_FAIL = 'update_user_fail';
 export const GET_USER_SUCCESS = 'get_user_success';
 export const GET_USER_FAIL = 'get_user_fail';
+export const GET_COUNTRY_BY_USER_SUCCESS = 'get_coutry_by_user_success';
+export const GET_COUNTRY_BY_USER_FAIL = 'get_coutry_by_user_fail';
