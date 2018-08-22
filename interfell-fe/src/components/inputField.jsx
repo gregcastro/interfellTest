@@ -4,21 +4,23 @@ import { connect } from 'react-redux';
 
 import setInputField from '../actions/inputField';
 
-
 class InputField extends React.PureComponent {
   render() {
     return (
-      <div className="">
-            <input
-                onChange={(e) => {this.props.setInputField(e.target.value, this.props.typeReducer);}}
-                defaultValue={this.props.value}
-                type={this.props.type}
-                className=""
-                placeholder={this.props.placeholder}
-                maxLength={this.props.maxLength}
-                disabled={this.props.disabled}
-                required
-            />
+
+      <div>
+        <div className="form-group">
+          <input
+            onChange={(e) => { this.props.setInputField(e.target.value, this.props.typeReducer); }}
+            defaultValue={this.props.value}
+            type={this.props.type}
+            className="form-control"
+            placeholder={this.props.placeholder}
+            maxLength={this.props.maxLength}
+            disabled={this.props.disabled}
+            required
+          />
+        </div>
       </div>
     );
   }

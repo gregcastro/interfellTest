@@ -2,10 +2,9 @@ import request from '../utils/network';
 
 import * as TYPE from './Types';
 
-export const get_countries = (token) => (dispatch) => {
+export const get_countries = () => (dispatch) => {
     request
         .get('/countries/')
-        .set({ Authorization: `JWT ${token}` })
         .then((response) => {
             dispatch({
                 type: TYPE.GET_COUNTRIES_SUCCESS,
@@ -39,14 +38,13 @@ export const get_country_by_user = (token) => (dispatch) => {
 };
 
 
-export const get_cities = (token, country) => (dispatch) => {
+export const get_cities = (country) => (dispatch) => {
     let query = '/';
     if (country !== -1) {
         query = `?country=${country}`;
     }
     request
         .get(`/cities${query}`)
-        .set({ Authorization: `JWT ${token}`, "Access-Control-Allow-Origin": true })
         .then((response) => {
             dispatch({
                 type: TYPE.GET_CITIES_SUCCESS,
@@ -62,10 +60,9 @@ export const get_cities = (token, country) => (dispatch) => {
 };
 
 
-export const get_academic_degrees = (token) => (dispatch) => {
+export const get_academic_degrees = () => (dispatch) => {
     request
         .get('/academicDegrees/')
-        .set({ Authorization: `JWT ${token}`, "Access-Control-Allow-Origin": true })
         .then((response) => {
             dispatch({
                 type: TYPE.GET_ACADEMIC_DEGREES_SUCCESS,

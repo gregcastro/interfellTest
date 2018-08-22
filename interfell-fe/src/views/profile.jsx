@@ -17,7 +17,8 @@ import {
     SET_COUNTRY,
     SET_EMAIL,
     SET_LAST_NAME,
-    SET_NAME } from '../actions/Types';
+    SET_NAME
+} from '../actions/Types';
 
 class Profile extends React.Component {
 
@@ -33,16 +34,16 @@ class Profile extends React.Component {
     }
 
     componentWillMount() {
-        this.props.get_countries(this.props.token);
-        this.props.get_cities(this.props.token, this.props.country);
-        this.props.get_academic_degrees(this.props.token);
+        this.props.get_countries();
+        this.props.get_cities(this.props.country);
+        this.props.get_academic_degrees();
         this.props.get_user(this.props.token, this.props.userData.pk);
         this.props.get_country_by_user(this.props.token);
 
     }
     componentWillReceiveProps(nextProps) {
         if (this.props.country !== nextProps.country) {
-            this.props.get_cities(this.props.token,nextProps.country);
+            this.props.get_cities(nextProps.country);
         }
     }
 
@@ -66,57 +67,33 @@ class Profile extends React.Component {
             );
         }
         return (
-            <div>
-                <header>
-                    <h1>Datos de Perfil</h1>
-                </header>
+            <div className="row">
 
-                <InputField
-                    width={200}
-                    placeholder={'Name'.toUpperCase()}
-                    typeReducer={SET_NAME}
-                    value={this.props.user.first_name}
-                    required
-                />
+                <div className="col-md-3 col-md-offset-4 text-center">
+                    <header>
+                        <h1>Datos de Perfil</h1>
+                    </header>
 
-                <InputField
-                    width={200}
-                    placeholder={'Last Name'.toUpperCase()}
-                    typeReducer={SET_LAST_NAME}
-                    value={this.props.user.last_name}
-                    required
-                />
-
-                <InputField
-                    width={200}
-                    placeholder={'Email'.toUpperCase()}
-                    typeReducer={SET_EMAIL}
-                    value={this.props.user.email}
-                    required
-                />
-
-                Pais
-                <SelectField values={this.props.countries} typeReducer={SET_COUNTRY} value={this.props.country} />
-                <br />
-
-                Ciudad
-                <SelectField values={this.props.cities} typeReducer={SET_CITY} value={this.props.user.city}/>
-                <br />
-
-                Nivel Academico
-                <SelectField values={this.props.academicDegrees} typeReducer={SET_ACADEMIC_DEGREE} value={this.props.user.academic_degree}/>
-
-
-                <InputField
-                    width={200}
-                    placeholder={'Address'.toUpperCase()}
-                    typeReducer={SET_ADDRESS}
-                    value={this.props.user.address}
-                    required
-                />
-
-                <Button title='Actualizar Datos' width={130} height={35} fontSize={15} callToAction={this.updateUser} />
-                <Button title='Logout' width={130} height={35} fontSize={15} callToAction={this.logout} />
+                    <InputField width={200} placeholder={'Name'.toUpperCase()} typeReducer={SET_NAME} value={this.props.user.first_name} required />
+                    <InputField width={200} placeholder={'Last Name'.toUpperCase()} typeReducer={SET_LAST_NAME} value={this.props.user.last_name} required />
+                    <InputField width={200} placeholder={'Email'.toUpperCase()} typeReducer={SET_EMAIL} value={this.props.user.email} required />
+                    <SelectField values={this.props.countries} typeReducer={SET_COUNTRY} value={this.props.country} title="Pais" />
+                    <SelectField values={this.props.cities} typeReducer={SET_CITY} value={this.props.user.city} title="Ciudad" />
+                    <SelectField values={this.props.academicDegrees} typeReducer={SET_ACADEMIC_DEGREE} value={this.props.user.academic_degree} title="Nivel Academico" />
+                    <InputField width={200} placeholder={'Address'.toUpperCase()} typeReducer={SET_ADDRESS} value={this.props.user.address} required />
+                    
+                    <div className="row">
+                        <div className="col-md-6 text-right">
+                            <Button title='Actualizar Datos' width={130} height={35} fontSize={15} callToAction={this.updateUser} />
+                        </div>
+                        <div className="col-md-6 text-left">
+                            <Button title='Logout' width={130} height={35} fontSize={15} callToAction={this.logout} className="btn btn-cancel" />
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </div>
             </div>
         );
     }

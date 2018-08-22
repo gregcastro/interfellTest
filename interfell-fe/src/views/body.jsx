@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 
 import Login from './login';
-import Error404 from './error404';
-import * as url from '../routes/routes';
 import Profile from './profile';
+import Error404 from './error404';
+import Register from './register';
+import * as url from '../routes/routes';
 
 class Body extends React.Component {
     render() {
@@ -18,17 +19,22 @@ class Body extends React.Component {
                         <Route
                             exact
                             path="/"
-                            render={() => (condition ? <Profile /> : <Login />)}
+                            render={() => (condition ? <Profile /> : <Redirect to={url.urlLogin} />)}
                         />
                         <Route
                             exact
                             path={url.urlLogin}
-                            render={() => (condition ? <Profile /> : <Login />)}
+                            render={() => (condition ? <Redirect to={url.urlProfile} /> : <Login />)}
                         />
                         <Route
                             exact
                             path={url.urlProfile}
-                            render={() => (condition ? <Profile /> : <Login />)}
+                            render={() => (condition ? <Profile /> : <Redirect to={url.urlLogin} />)}
+                        />
+                        <Route
+                            exact
+                            path={url.urlRegister}
+                            render={() => (condition ? <Redirect to={url.urlProfile} /> : <Register />)}
                         />
                         <Route component={Error404} />
                     </Switch>

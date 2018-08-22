@@ -14,12 +14,12 @@ class SelectField extends React.PureComponent {
             ));
         }
         return (
-            <select
-                onChange={(e) => { this.props.setInputField(e.target.value, this.props.typeReducer); }}
-            >
-                <option value="-1">Seleccione</option>
-                {optionValues}
-            </select>
+            <div className="form-group">
+                <select className="form-control" id="sel1" onChange={(e) => { this.props.setInputField(e.target.value, this.props.typeReducer); }}>
+                    <option value="-1">Seleccionar {this.props.title}</option>
+                    {optionValues}
+                </select>
+            </div>
         );
     }
 }
@@ -29,6 +29,7 @@ SelectField.defaultProps = {
     values: [],
     typeReducer: '',
     setInputField: null,
+    title: 'Seleccione',
 };
 
 SelectField.propTypes = {
@@ -36,6 +37,7 @@ SelectField.propTypes = {
     values: PropTypes.array,
     typeReducer: PropTypes.string,
     setInputField: PropTypes.func,
+    title: PropTypes.string,
 };
 
 const mapStateToProps = state => ({});
