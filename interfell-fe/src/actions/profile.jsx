@@ -19,10 +19,32 @@ export const get_countries = () => (dispatch) => {
         });
 };
 
-
-export const get_cities = () => (dispatch) => {
+export const get_country_by_user = (token) => (dispatch) => {
     request
-        .get('/cities/')
+        .get('/countryByUser/')
+        .set({ Authorization: `JWT ${token}` })
+        .then((response) => {
+            dispatch({
+                type: TYPE.GET_COUNTRY_BY_USER_SUCCESS,
+                payload: response.body,
+            });
+        })
+        .catch((err) => {
+            dispatch({
+                type: TYPE.GET_COUNTRY_BY_USER_FAIL,
+                payload: [],
+            });
+        });
+};
+
+
+export const get_cities = (country) => (dispatch) => {
+    let query = '/';
+    if (country !== -1) {
+        query = `?country=${country}`;
+    }
+    request
+        .get(`/cities${query}`)
         .then((response) => {
             dispatch({
                 type: TYPE.GET_CITIES_SUCCESS,
@@ -32,7 +54,7 @@ export const get_cities = () => (dispatch) => {
         .catch((err) => {
             dispatch({
                 type: TYPE.GET_CITIES_FAIL,
-                payload: err.response.body,
+                payload: [],
             });
         });
 };
@@ -50,16 +72,17 @@ export const get_academic_degrees = () => (dispatch) => {
         .catch((err) => {
             dispatch({
                 type: TYPE.GET_ACADEMIC_DEGREES_FAIL,
-                payload: err.response.body,
+                payload: [],
             });
         });
 };
 
 
-export const update_user = (user, pk, callback) => (dispatch) => {
+export const update_user = (token, user, pk, callback) => (dispatch) => {
     request
         .put(`/users/${pk}`)
         .send(user)
+        .set({ Authorization: `JWT ${token}` })
         .then((response) => {
             callback();
             dispatch({
@@ -76,9 +99,10 @@ export const update_user = (user, pk, callback) => (dispatch) => {
 };
 
 
-export const get_user = (pk) => (dispatch) => {
+export const get_user = (token, pk) => (dispatch) => {
     request
         .get(`/users/${pk}`)
+        .set({ Authorization: `JWT ${token}` })
         .then((response) => {
             dispatch({
                 type: TYPE.GET_USER_SUCCESS,

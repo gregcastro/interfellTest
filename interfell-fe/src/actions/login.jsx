@@ -11,14 +11,13 @@ export const login = (user, callback) => (dispatch) => {
         .send(user)
         .then((response) => {
             addAuth(response.body.token);
-            callback();
             dispatch({
                 type: TYPE.LOGIN_SUCCESS,
                 payload: response.body,
             });
         })
         .catch((err) => {
-            console.log(err);
+            callback();
             dispatch({
                 type: TYPE.LOGIN_FAIL,
                 payload: err.response.body,
