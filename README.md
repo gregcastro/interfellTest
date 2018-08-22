@@ -5,6 +5,25 @@
 + Pip3 (9.0+)
 + PostgreSQL 9.5+
 
+
+## Install instructions
+
+Create a \[virtual environment\](https://virtualenv.pypa.io/en/latest/) with these commands
+
+```bash
+$ cd /your_path/Interfell/
+$ virtualenv env
+$ source env/bin/activate
+
+```
+
+Then, install requirements files in **Interfell/requirements.txt** (virtual env must be activated)
+
+```bash
+(env)$ pip install -r requirements.txt
+
+```
+
 ### Setup database
 
 Change the password of postgres user
@@ -14,11 +33,12 @@ ALTER USER postgres WITH PASSWORD 'new_password';
 
 ```
 
-Creating database
+### Creating database
 
-```SQL
-CREATE DATABASE interfell;
+In /your_path/interfellTest/ type
 
+```bash
+$ psql -U postgres < db_interfell.sql
 ```
 
 ### Creating local settings file
@@ -31,15 +51,29 @@ Go to /your_path/interfellTest/interfellTest/settings.py and include your databa
 
 ```sql
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.contrib.gis.db.backends.postgis',
-		'NAME': 'interfell', # database name
-		'USER': 'postgres', # database user
-		'PASSWORD': your_password, # database password
-		'HOST': 'localhost', # database server
-		'PORT': '5432' # database port
+	"default": {
+		"ENGINE": "django.db.backends.postgresql_psycopg2",
+		"NAME": "interfell", # database name
+		"USER": "postgres", # database user
+		"PASSWORD": your_password, # database password
+		"HOST": "localhost", # database server
+		"PORT": "5432", # database port
 	}
 }
+```
+
+### Migrations
+Go to /your_path/interfellTest/interfellTest/ and write
+
+```bash
+(env)$ python manage.py makemigrations
+(env)$ python magage.py migrate
+
+```
+
+## Running App
+```bash
+(env)$ python manage.py runserver 0.0.0.0:8000
 
 ```
 

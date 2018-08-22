@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from .views import UserListCreateAPIView, UserRetrieveUpdateDestroyAPIView, CountryListAPIView, CityListAPIView, AcademicDegreeListAPIView
+from .views import UserListCreateAPIView, UserRetrieveUpdateDestroyAPIView, CountryListAPIView, CityListAPIView, AcademicDegreeListAPIView, CountryRetrieveAPIView
 
 
 urlpatterns = format_suffix_patterns([
@@ -12,5 +12,7 @@ urlpatterns = format_suffix_patterns([
 	url(r'^countries?/?$', CountryListAPIView.as_view(), name='country-list'),
 	url(r'^cities?/?$', CityListAPIView.as_view(), name='city-list'),
 	url(r'^academicDegrees?/?$', AcademicDegreeListAPIView.as_view(), name='academic-degree-list'),
+
+	url(r'^countryByUser?/?$', CountryRetrieveAPIView, name='country-by-user'),
 
 ])

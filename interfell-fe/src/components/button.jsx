@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import '../sass/components/button.scss';
 
 class Button extends React.PureComponent {
     render() {
@@ -26,7 +25,7 @@ Button.defaultProps = {
     backgroundColor: '',
     backgroundImage: '',
     fontSize: 16,
-    className: 'button',
+    className: 'btn btn-primary',
     color: '',
     callToAction: null,
     disabled: false,
